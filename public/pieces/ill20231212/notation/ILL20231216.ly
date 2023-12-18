@@ -37,6 +37,9 @@
 
       \override Score.BarNumber.break-visibility = ##(#f #f #f) %The order of the three values is end of line visible, middle of line visible, beginning of line visible.
      
+     
+      
+     
       \new Staff \with 
       {
         \omit TimeSignature
@@ -61,87 +64,40 @@
         \override Stem.direction = #up
         \stopStaff % Hides staff lines
         \set Score.tempoHideNote = ##t
-        
+        %\override Stem.transparent = ##t  
+
         
         %%%%%%% SCORE BEGINS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        
+        %Grace notes into attack
+        %Attacked grace notes
+        %Alternate with long tones and silence
+        
+        
         
         \tempo 4 = 60
         \time 42/4
         
        
-        r4 r r r
+        r4 r
         
-        \once \override TupletNumber #'text = "3:1"
-        \tuplet 3/2 {r8 b'8 r8}
-        
-        b'16 [b'16 b'16 r16] % square brackets to extend beams over rest; for some reason it only works with omitting the first note
-       
-        \once \override TupletNumber #'text = "5:2"
-        \tuplet 5/4 {[r8 r8 b'16 r16 b'8 r8]}
-       
-        \once \override TupletNumber #'text = "5:1"
-        \tuplet 5/4 {r16[ r16 r16 r16 b'16]}
-        
-        r8 [b'8]
-        
-        \once \override TupletNumber #'text = "11:2"
-        \tuplet 11/8 {
-          r16 [b'16 r16  
-          
-          \tuplet 3/2 { 
-            r16 b'8 
-          } 
-          
-          r16 r16 b'16 r16 r16 b'16  ]
+
+        \grace {  
+          \override NoteHead.font-size = #-8
+         [ e''32    <f'' d''> <g'' c''> <a'' e'' b'> <g'' b''> <e'' g'' b'' d''>g'' <b' c'''> <g''f'''> <b''e'''> <g'' b'' d'''> ]
         }
+        \override NoteHead.font-size = #-2
+
+        b'16  r
         
-        b'4 ~ b'8
-       
-        [  \tuplet 3/2 {r16 r16 b'16} ]
-      
-        b'8 [r8]
-      
-        \once \override TupletNumber #'text = "7:1"
-        \tuplet 7/4 { r16 [ b'16 r16 r16 r16 b'8 ~ ] }
-      
-        \once \override TupletNumber #'text = "5:1"
-        \tuplet 5/4 { b'16 [ r16 r16 b'16 r16 ] }
-      
-        \once \override TupletNumber #'text = "13:3"
-        \tuplet 13/12 { r16 [ r16 r 16 b'16 b'16 b'16 r16 r16 b'16 b'16 r16 b'8 ~ ] }
-        
-        b'16 [r16 r16 b'16]
-      
-        \once \override TupletNumber #'text = "7:1"
-        \tuplet 7/4 { r16 [ b'16 r16 r16 b'16 r16 r16 ] }
-      
-        \once \override TupletNumber #'text = "11:2"
-        \tuplet 11/8 { r16 [ b'16 b' 16 r16 r16 b'16 r16 b'16 r16 b'16 b'16 ~] }
-      
-        \once \override TupletNumber #'text = "5:1"
-        \tuplet 5/4 { b'8 [ b'16 b'16 r16 ~ ] }
-        
-        b'16 [ r16 r16 b'16 ~ ]
-      
-        \once \override TupletNumber #'text = "3:1"
-        \tuplet 3/2 { b'8 [ r8 b'8 ~ ] }
-        
-        b'8 [ r8 ]
-      
-        \once \override TupletNumber #'text = "9:1"
-        \tuplet 9/4 { b'16 [ b'16 b'16 b'16 b'16 b'16 b'16 b'16 b'16 ] }
-        
-        r4
-      
-        \once \override TupletNumber #'text = "17:3"
-        \tuplet 17/12 { r16 [ r16 b'16 r16 r16 b'16 b'16 b'16 r16 r16 r16 b'16 b'16 r16 b'16 r16 b'16 ~ ] }
-        
-        b'8 ~  \tuplet 5/2 { [b'16 ~ b'16  ~ b'16 r16 b'16 ] }
-        
-        b' \breve
-        
-        
-        
+        \afterGrace 10/13 
+        b'8 
+        { 
+          \override NoteHead.font-size = #-8
+          c''32 d'' e'' f'' g'' c' d' e' f' g'
+        }
+        \override NoteHead.font-size = #-2
+
         
         
         
@@ -156,7 +112,7 @@
        
         %extra note for right border in Inkscape/SVG
         \once \override Stem.direction = #down
-        b'4 
+        g''4 
 
         %%%%% END SCORE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         
