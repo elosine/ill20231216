@@ -60,18 +60,20 @@
         \override Stem.details.beamed-lengths = #'(7)
         \override Stem.details.lengths = #'(7)
         % \override NoteColumn.accent-skip = ##t
-        \override Accidental.font-size = -4 
+        \override Accidental.font-size = -2 
         \override Stem.direction = #up
         \stopStaff % Hides staff lines
         \set Score.tempoHideNote = ##t
-        %\override Stem.transparent = ##t  
-
+        %\override Stem.transparent = ##t 
+        \override Score.Script.font-size = #-2 %change articulation font size
+        
         
         %%%%%%% SCORE BEGINS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         
         %Grace notes into attack
         %Attacked grace notes
         %Alternate with long tones and silence
+        %position post grace in inkscape
         
         
         
@@ -81,23 +83,44 @@
        
         r4 r
         
-
-        \grace {  
+        \grace  {  
           \override NoteHead.font-size = #-8
-         [ e''32    <f'' d''> <g'' c''> <a'' e'' b'> <g'' b''> <e'' g'' b'' d''>g'' <b' c'''> <g''f'''> <b''e'''> <g'' b'' d'''> ]
+          [ e''32    <f'' d''> <g'' c''> <a'' e'' b'>  <g'' c''>  <f'' d''> e''  ]
         }
         \override NoteHead.font-size = #-2
 
-        b'16  r
+        \once \override Stem.direction = #down
+        e''8 -^  
         
-        \afterGrace 10/13 
-        b'8 
+        \hideNotes r8 \unHideNotes
+
+        \once \override Stem.direction = #down
+        \afterGrace  
+        e''8 -^
         { 
           \override NoteHead.font-size = #-8
-          c''32 d'' e'' f'' g'' c' d' e' f' g'
+          [ e''32    <f'' d''> <g'' c''> <a'' e'' b'>  <g'' c''>  <f'' d''> e''  ]
         }
         \override NoteHead.font-size = #-2
-
+        \hideNotes r8 \unHideNotes
+        
+        b'4~
+        
+        \once \override TupletNumber #'text = "5:2"
+        \tuplet 5/4 {b'8 r8 r b'4~}
+        
+        b'4
+        
+        \once \override Stem.direction = #down
+        \afterGrace 
+        e''8 -^
+        { 
+          \override NoteHead.font-size = #-8
+          [ e''32    <f'' d''> <g'' c''> <b' e'' a''>  <a' e'' b''>  <g' d'' f'' c''' >  <a' e'' b''>  <b' e'' a''>  <g'' c''>  <f'' d''> e''  ]
+        }
+        \override NoteHead.font-size = #-2
+        \hideNotes r8 \unHideNotes
+        
         
         
         
@@ -132,7 +155,7 @@
         proportionalNotationDuration = #(ly:make-moment 1/35) 
         \override SpacingSpanner.uniform-stretching = ##t
         \override SpacingSpanner.strict-note-spacing = ##t
-        %  \override SpacingSpanner.strict-grace-spacing = ##t
+        % \override SpacingSpanner.strict-grace-spacing = ##t
         \override Beam.breakable = ##t
         \override Glissando.breakable = ##t
         \override TextSpanner.breakable = ##t
