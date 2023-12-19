@@ -224,17 +224,17 @@ function animationEngine(timestamp) { //timestamp not used; timeSync server libr
 }
 // Update Functions
 function update() {
+//Loops
+totalNumFramesPerLoop.forEach((numFrames, loopIx) => {
+  let currFrame = FRAMECOUNT % numFrames;
+  updateLoops(currFrame, loopIx);
+});
+//Scrolling Cursors
   totalNumFramesPerTempo.forEach((numFrames, tempoIx) => {
     let currFrame = FRAMECOUNT % numFrames;
     updateScrollingCsrs(currFrame, tempoIx);
     updateBbs(currFrame, tempoIx);
   });
-  //Loops
-  totalNumFramesPerLoop.forEach((numFrames, loopIx) => {
-    let currFrame = FRAMECOUNT % numFrames;
-    updateLoops(currFrame, loopIx);
-  });
-
 }
 //#endef Animation Engine END
 
@@ -243,9 +243,9 @@ function init() { //runs from html file: ill20231212.html <body onload='init();'
   makeCanvas();
   drawNotation();
   makeLoopBrackets();
+  makeLoopCursors();
   makeScrollingCursors();
   makeBbs();
-  makeLoopCursors();
   makeLoopBbs();
   calcTimeline();
   calcLoops();
