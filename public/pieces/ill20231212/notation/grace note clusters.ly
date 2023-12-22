@@ -78,14 +78,19 @@
         
         
         \tempo 4 = 60
-        \time 1/4
+        \time 49/4
+        
+       %Make a 0.5 - 5 version for before and after
+       %1/8 before
+       
+       
         
        
-        r4 r
+        r8 e''8
         
         \grace  {  
           \override NoteHead.font-size = #-8
-          [ e''32    <f'' d''> <g'' c''> <a'' e'' b'>  <g'' c''>  <f'' d''> e''  ]
+          [ e''32 e'' <f'' d''> <g'' c''> <b' d'' f'' a''>  <a' c'' g'' b''>  <g' b' e'' a'' c''' >  <a' c'' g'' b''>  <b' d'' f'' a''>  <g'' c''>  <f'' d''> e'' ]
         }
         \override NoteHead.font-size = #-2
         \once \override Stem.direction = #down
