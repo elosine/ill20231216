@@ -21,7 +21,7 @@ let panelTitle = "Interactive Looping Line 20231216"
 //just draw several times 1 for each line and move it over
 //105 pixels per beat; 42 beats; 4410 x 109
 //9 beats per line; 945 pixels per line
-const NOTATION_FILE_NAME = 'ILL20231212_SVG.svg';
+const NOTATION_FILE_NAME = 'ILL20231216_SVG.svg';
 const PX_PER_BEAT = 105;
 const BEATS_PER_LINE = 9;
 const WHOLE_NOTATION_W = 4410;
@@ -36,7 +36,7 @@ const TOTAL_NUM_PX_IN_SCORE = NOTATION_LINE_LENGTH * NUM_NOTATION_LINES;
 WORLD_W = NOTATION_LINE_LENGTH;
 WORLD_H = (NOTATION_H * NUM_NOTATION_LINES) + (GAP_BTWN_NOTATION_LINES * (NUM_NOTATION_LINES - 1));
 //Tempo Timing
-let tempos = [60, 37.14, 96.92];
+let tempos = [60, 37.14, 96.92, 32.3, 86.67];
 let totalNumFramesPerTempo = [];
 let tempoConsts = [];
 tempos.forEach((tempo, i) => {
@@ -57,7 +57,7 @@ tempos.forEach((tempo, i) => {
 let beatLines = [];
 //Scrolling Cursors
 let scrollingCursors = [];
-let scrollingCsrY1 = 33;
+let scrollingCsrY1 = 13;
 let scrollingCsrH = 57;
 let scrollingCsrClrs = [];
 tempos.forEach((tempo, tix) => {
@@ -66,24 +66,24 @@ tempos.forEach((tempo, tix) => {
 //Loops
 let totalNumFramesPerLoop = [];
 let loops = [{
-  beatA: 4,
-  beatB: 8,
+  beatA: 2,
+  beatB: 5,
   tempoIx: 0,
   initY: scrollingCsrY1
 }, {
-  beatA: 10,
-  beatB: 13,
-  tempoIx: 1,
+  beatA: 20,
+  beatB: 22,
+  tempoIx: 4,
   initY: scrollingCsrY1 + NOTATION_H + GAP_BTWN_NOTATION_LINES
 }, {
-  beatA: 15,
-  beatB: 17,
+  beatA: 9,
+  beatB: 12,
   tempoIx: 2,
   initY: scrollingCsrY1 + NOTATION_H + GAP_BTWN_NOTATION_LINES
 }, {
-  beatA: 21,
-  beatB: 25,
-  tempoIx: 0,
+  beatA: 20,
+  beatB: 23,
+  tempoIx: 3,
   initY: scrollingCsrY1 + ((NOTATION_H + GAP_BTWN_NOTATION_LINES) * 2)
 }];
 loops.forEach((loopObj, loopIx) => {
@@ -142,7 +142,7 @@ function calcTimeline() {
       let tx = tCurPx % NOTATION_LINE_LENGTH; //calculate cursor x location at each frame for this tempo
       td['x'] = tx;
       //Calc BBy
-      let tBbX = tCurPx % PX_PER_BEAT;
+      let tBbX = tCurPx % Math.round(PX_PER_BEAT);
       let tBbY = bbOneBeat[tBbX].y;
       //Calc Y pos
       let ty;
@@ -181,7 +181,7 @@ function calcLoops() {
       let tx = (tCurPx + loopObj.beatApxX) % NOTATION_LINE_LENGTH;
       td['x'] = tx;
       //Calc BBy
-      let tBbX = tCurPx % PX_PER_BEAT;
+      let tBbX = tCurPx % Math.round(PX_PER_BEAT);
       let tBbY = bbOneBeat[tBbX].y + loopObj.initY - scrollingCsrY1;
       //Calc Y pos
 
@@ -224,12 +224,12 @@ function animationEngine(timestamp) { //timestamp not used; timeSync server libr
 }
 // Update Functions
 function update() {
-//Loops
-totalNumFramesPerLoop.forEach((numFrames, loopIx) => {
-  let currFrame = FRAMECOUNT % numFrames;
-  updateLoops(currFrame, loopIx);
-});
-//Scrolling Cursors
+  //Loops
+  totalNumFramesPerLoop.forEach((numFrames, loopIx) => {
+    let currFrame = FRAMECOUNT % numFrames;
+    updateLoops(currFrame, loopIx);
+  });
+  //Scrolling Cursors
   totalNumFramesPerTempo.forEach((numFrames, tempoIx) => {
     let currFrame = FRAMECOUNT % numFrames;
     updateScrollingCsrs(currFrame, tempoIx);
@@ -296,7 +296,7 @@ function drawNotation() {
   for (var i = 0; i < NUM_NOTATION_LINES; i++) {
     //Notation
     let tSvgImage = document.createElementNS(SVG_NS, "image");
-    tSvgImage.setAttributeNS(XLINK_NS, 'xlink:href', '/pieces/ill20231212/notationSVGs/' + NOTATION_FILE_NAME);
+    tSvgImage.setAttributeNS(XLINK_NS, 'xlink:href', '/pieces/ill20231216/notationSVGs/' + NOTATION_FILE_NAME);
     tSvgImage.setAttributeNS(null, "y", i * (NOTATION_H + GAP_BTWN_NOTATION_LINES));
     tSvgImage.setAttributeNS(null, "x", i * -NOTATION_LINE_LENGTH);
     tSvgImage.setAttributeNS(null, "visibility", 'visible');
@@ -407,16 +407,16 @@ function makeLoopBbs() {
 function makeLoopBrackets() {
   loops.forEach((loopObj, loopIx) => {
     let tSvgImage = document.createElementNS(SVG_NS, "image");
-    tSvgImage.setAttributeNS(XLINK_NS, 'xlink:href', '/pieces/ill20231212/notationSVGs/leftBracket.svg');
-    tSvgImage.setAttributeNS(null, "y", loopObj.initY-13);
+    tSvgImage.setAttributeNS(XLINK_NS, 'xlink:href', '/pieces/ill20231216/notationSVGs/leftBracket.svg');
+    tSvgImage.setAttributeNS(null, "y", loopObj.initY - 13);
     tSvgImage.setAttributeNS(null, "x", loopObj.beatApxX);
     tSvgImage.setAttributeNS(null, "visibility", 'visible');
     tSvgImage.setAttributeNS(null, "display", 'yes');
     canvas.svg.appendChild(tSvgImage);
     let tSvgImageR = document.createElementNS(SVG_NS, "image");
-    tSvgImageR.setAttributeNS(XLINK_NS, 'xlink:href', '/pieces/ill20231212/notationSVGs/rightBracket.svg');
-    tSvgImageR.setAttributeNS(null, "y", loopObj.initY-13);
-    tSvgImageR.setAttributeNS(null, "x", loopObj.beatApxX +loopObj.lenPx-20);
+    tSvgImageR.setAttributeNS(XLINK_NS, 'xlink:href', '/pieces/ill20231216/notationSVGs/rightBracket.svg');
+    tSvgImageR.setAttributeNS(null, "y", loopObj.initY - 13);
+    tSvgImageR.setAttributeNS(null, "x", loopObj.beatApxX + loopObj.lenPx - 20);
     tSvgImageR.setAttributeNS(null, "visibility", 'visible');
     tSvgImageR.setAttributeNS(null, "display", 'yes');
     canvas.svg.appendChild(tSvgImageR);
