@@ -380,7 +380,7 @@ function makeLoopCursors() {
       y1: scrollingCsrY1,
       x2: 0,
       y2: scrollingCsrY1 + scrollingCsrH,
-      stroke: 'yellow',
+      stroke: TEMPO_COLORS[(i + scrollingCsrClrs.length)%TEMPO_COLORS.length],
       strokeW: 3
     });
     tCsr.setAttributeNS(null, 'stroke-linecap', 'round');
